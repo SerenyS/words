@@ -1,9 +1,11 @@
 package edu.wctc;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Main {
+    public Scanner keyboard = new Scanner(System.in);
 
     private final static FileInput indata = new FileInput("the_book.csv");
     private final static Map<String, Integer> map = new HashMap<>();
@@ -38,15 +40,76 @@ public class Main {
 
             }
         }
+    }
 
-        // Loop over entries in the map, getting each key/value pair
+
+    public static void printListOfOnes() {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+            //System.out.println(entry.getKey() + " " + entry.getValue());
+            if (entry.getValue() == 1) {
+                int result = entry.getValue();
+                System.out.println(entry.getKey() + " " + entry.getValue());
+
+            }
         }
     }
 
+    public static void printMenu() {
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.println("Select Option");
+        System.out.println("1. View Complete List");
+        System.out.println("2. Words only mentioned one time");
+        System.out.println("3. top 10 most mentioned words");
+
+        String choice = keyboard.nextLine();
+
+        if (choice.equals("1")) {
+            all();
+        } else if (choice.equals("2")) {
+            printListOfOnes();
+        } else if (choice.equals("3")) {
+            topTen();
+        } else {
+            System.out.println("Invalid response");
+            printMenu();
+        }
+    }
+
+
+    public static void topTen() {
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+
+            Integer mostMentioned = 0;
+
+
+            while (entry.getValue() > mostMentioned) {
+                Integer mentioned = entry.getValue();
+                list.add(mentioned);
+            }
+            for (int i = 0; i < 9; i++) {
+                System.out.println(list);
+            }
+
+        }
+    }
+
+
     public static void main(String[] args) {
         new Main();
+        printMenu();
+
+    }
+
+    public static void all() {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+
+        }
     }
 
 }
